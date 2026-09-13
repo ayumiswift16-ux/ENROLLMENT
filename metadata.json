@@ -1,0 +1,8 @@
+{
+  "name": "Collegio de Montalban Enrollment System",
+  "description": "A professional and modern student enrollment platform for Collegio de Montalban featuring a multi-step enrollment process, student records management, and administrative dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #059669;
+  --color-primary-dark: #064e3b;
+  --color-accent: #10b981;
+  --color-text-main: #0f172a;
+  --color-text-sub: #64748b;
+  --color-sidebar-bg: #051c14;
+  
+  --background-image-glass-gradient: radial-gradient(circle at top right, #ecfdf5, #f8fafc);
+}
+
+@layer base {
+  body {
+    @apply bg-[#f8fafc] text-text-main font-sans;
+  }
+}
+
+.glass-panel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.frosted-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 5mm 10mm;
+  }
+
+  .no-print, 
+  nav, 
+  aside, 
+  header, 
+  footer,
+  .print-hidden {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 10pt;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Force content to fit */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}

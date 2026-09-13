@@ -1,0 +1,152 @@
+{
+  "entities": {
+    "StudentInfo": {
+      "title": "Student Info",
+      "description": "Personal and contact information of a student",
+      "type": "object",
+      "properties": {
+        "firstName": { "type": "string" },
+        "middleName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "age": { "type": "string" },
+        "gender": { "type": "string" },
+        "address": { "type": "string" },
+        "contactNumber": { "type": "string" },
+        "email": { "type": "string" },
+        "birthday": { "type": "string" },
+        "studentId": { "type": "string" },
+        "yearLevel": { "type": "string", "enum": ["1st Year", "2nd Year", "3rd Year", "4th Year"] },
+        "section": { "type": "string" }
+      },
+      "required": ["firstName", "lastName", "email"]
+    },
+    "EnrollmentRecord": {
+      "title": "Enrollment Record",
+      "description": "Details of a student's enrollment",
+      "type": "object",
+      "properties": {
+        "studentInfo": { "$ref": "#/entities/StudentInfo" },
+        "type": { "type": "string", "enum": ["Regular", "Irregular", "Returnee"] },
+        "course": { "type": "string" },
+        "yearLevel": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected", "Enrolled", "Validating"] },
+        "enrolledAt": { "type": "string", "format": "date-time" },
+        "examDate": { "type": "string", "description": "Scheduled date for entrance exam" },
+        "examStartTime": { "type": "string", "description": "Scheduled start time for entrance exam" },
+        "examEndTime": { "type": "string", "description": "Scheduled end time for entrance exam" },
+        "examVenue": { "type": "string", "description": "Scheduled venue for entrance exam" },
+        "userId": { "type": "string", "description": "The UID of the student if using Auth, or username" }
+      },
+      "required": ["studentInfo", "type", "course", "status"]
+    },
+    "Section": {
+      "title": "Section",
+      "description": "A class section",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "yearLevel": { "type": "string" }
+      },
+      "required": ["name", "yearLevel"]
+    },
+    "ScheduleItem": {
+      "title": "Schedule Item",
+      "description": "A single class session schedule",
+      "type": "object",
+      "properties": {
+        "section": { "type": "string" },
+        "subject": { "type": "string" },
+        "day": { "type": "string", "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "instructor": { "type": "string" },
+        "room": { "type": "string" }
+      },
+      "required": ["section", "subject", "day", "startTime", "endTime"]
+    },
+    "SystemSettings": {
+      "title": "System Settings",
+      "description": "Global application configurations",
+      "type": "object",
+      "properties": {
+        "enrollmentStartDate": { "type": "string", "format": "date-time" },
+        "enrollmentEndDate": { "type": "string", "format": "date-time" },
+        "academicYear": { "type": "string" },
+        "semester": { "type": "string" }
+      },
+      "required": ["enrollmentStartDate", "enrollmentEndDate", "academicYear", "semester"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Extended user profile data",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "student"] },
+        "profilePicture": { "type": "string" }
+      },
+      "required": ["username", "name", "role"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System notification for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "success", "warning", "error"] },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "message", "type", "read", "createdAt"]
+    },
+    "TeacherRequest": {
+      "title": "Teacher Request",
+      "description": "A request for a professor account",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "institute": { "type": "string" },
+        "email": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "uid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fullName", "email", "username", "status"]
+    }
+  },
+  "firestore": {
+    "/enrollments/{enrollmentId}": {
+      "schema": "EnrollmentRecord",
+      "description": "Collection of all student enrollment records"
+    },
+    "/sections/{sectionId}": {
+      "schema": "Section",
+      "description": "Collection of available class sections"
+    },
+    "/schedules/{scheduleId}": {
+      "schema": "ScheduleItem",
+      "description": "Collection of all class schedules across all sections"
+    },
+    "/settings/{settingId}": {
+      "schema": "SystemSettings",
+      "description": "Global system settings, e.g., 'enrollment'"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and extended data. Listable by role='admin' to allow reporting system issues."
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications. Creatable by any user if the recipient is an admin (reporting)."
+    },
+    "/teacher_requests/{requestId}": {
+      "schema": "TeacherRequest",
+      "description": "Collection of professor account requests"
+    }
+  }
+}
