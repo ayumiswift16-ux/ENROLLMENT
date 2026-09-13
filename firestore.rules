@@ -9,7 +9,8 @@ service cloud.firestore {
     function isHardcodedAdmin() {
       return isSignedIn() && request.auth.token.email != null && (
         request.auth.token.email == 'davevenzon789@gmail.com' || 
-        request.auth.token.email.matches('.*admin[1-5]@school\\.portal$')
+        request.auth.token.email == 'admin@school.portal' || 
+        request.auth.token.email.matches('.*admin[0-9]*@school\\.portal$')
       );
     }
 

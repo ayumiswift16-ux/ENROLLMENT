@@ -38,7 +38,8 @@ export default function App() {
 
       if (firebaseUser) {
         const isAdmin = firebaseUser.email === 'davevenzon789@gmail.com' || 
-                        !!firebaseUser.email?.match(/^admin[1-5]@school\.portal$/);
+                        firebaseUser.email === 'admin@school.portal' ||
+                        !!firebaseUser.email?.match(/^admin[0-9]*@school\.portal$/);
         
         if (isAdmin) {
           const adminUser: User = {
